@@ -1,0 +1,22 @@
+{
+  "name": "shoppinglist-electron-app",
+  "version": "0.0.1",
+  "description": "simple shoppinglist app with electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elinhart/shoppingList-electron-app.git"
+  },
+  "author": "Ervin Linhart",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elinhart/shoppingList-electron-app/issues"
+  },
+  "homepage": "https://github.com/elinhart/shoppingList-electron-app#readme",
+  "dependencies": {
+    "electron": "^6.0.10"
+  }
+}
