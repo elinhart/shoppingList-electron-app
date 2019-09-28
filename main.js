@@ -2,7 +2,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu} = electron;
+const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 let mainWindow;
 let addWindow;
@@ -10,10 +10,15 @@ let addWindow;
 //LIsten for the app to be ready
 app.on('ready', function() {
     //Create main window
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow(
+        {
+            webPreferences: {
+                nodeIntegration: true
+            }
+        });
     //load html file to the main window
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'mainWindow.html'),
+        pathname: path.join(__dirname,'src/mainWindow.html'),
         protocol: 'file',
         slashes: true
     }));
@@ -37,19 +42,31 @@ function createAddWindow() {
         width:300,
         height:200,
         title: 'Add Shopping List Item',
-        //frame:false
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
     //load html file to the add window
     addWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'addWindow.html'),
+        pathname: path.join(__dirname,'src/addWindow.html'),
         protocol: 'file',
         slashes: true
     }));
     //garbage handle
     addWindow.on('close', function() {
         addWindow = null;
-    })
+    });
 }
+
+// Catch item:add
+ipcMain.on('item:add', function(e, item){
+    mainWindow.webContents.send('item:add', item);
+    addWindow.close(); 
+    // Still have a reference to addWindow in memory. Need to reclaim memory (Grabage collection)
+    addWindow = null;
+  });
+
+
 
 //Create menu template
 const mainMenuTemplate = [
