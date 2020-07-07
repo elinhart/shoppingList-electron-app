@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/elinhart/shoppingList-electron-app#readme",
   "dependencies": {
-    "electron": "^6.0.10"
+    "electron": "^7.2.4"
   }
 }
